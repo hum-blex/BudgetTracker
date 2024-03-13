@@ -3,20 +3,21 @@
 	<div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
 		<div class="row">
 			<div class="col-12 text-center">
-				<h2 class="text-primary">Create Category</h2>
+				<h2 class="text-primary">Delete Category</h2>
 			</div>
 		</div>
 	</div>
 	<div class="card-body p-4">
 		<form class="row" method="post">
+			<input asp-for="Id" hidden />
 			<div class="col mt-5">
 				<div class="form-floating col-md-3 ">
-					<input type="text" class="form-control" asp-for="CategoryName" />
+					<input type="text" disabled class="form-control" asp-for="CategoryName" />
 					<label class="ms-2" asp-for="CategoryName">Category</label>
 				</div>
 				<div class="row">
 					<div class="col-md-3 mt-3">
-						<button type="submit" class="btn btn-primary form-control">Create</button>
+						<button type="submit" class="btn btn-primary form-control">Delete</button>
 					</div>
 					<div class="mt-3 col-md-3">
 						<a asp-controller="Category" asp-action="Index" class="btn btn-outline-primary border form-control">

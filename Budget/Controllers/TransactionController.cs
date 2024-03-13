@@ -6,10 +6,10 @@ namespace Budget.Controllers
 {
 	public class TransactionController : Controller
 	{
-		private readonly ApplicationDbContext db;
-		public TransactionController(ApplicationDbContext _db)
+		private readonly ApplicationDbContext _db;
+		public TransactionController(ApplicationDbContext db)
 		{
-			this.db = _db;
+			_db = db;
 		}
 		public IActionResult Index()
 		{
@@ -21,8 +21,18 @@ namespace Budget.Controllers
 			return View();
 		}
 		[HttpPost]
-		public IActionResult Create(TransactionModel transaction)
+		public async Task<IActionResult> Create(TransactionModel transactionModel)
 		{
+			var transaction = new TransactionModel
+			{
+				Name = transactionModel.Name,
+				Amount = transactionModel.Amount,
+				Category = transactionModel.Category,
+				DateTime = DateTime.Now,
+				CategoryId = transactionModel.Category.Id,
+			};
+			await _db.transaction.AddAsync(transaction);
+			_db.SaveChanges();
 			return View();
 		}
 	}
