@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Budget.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240310155404_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20240314052058_initial migration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,11 @@ namespace Budget.Migrations
 
             modelBuilder.Entity("Budget.Models.CategoryModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
@@ -42,18 +44,17 @@ namespace Budget.Migrations
 
             modelBuilder.Entity("Budget.Models.TransactionModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
-
-                    b.Property<Guid>("CategoryId1")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
@@ -64,7 +65,7 @@ namespace Budget.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("transaction");
                 });
@@ -72,17 +73,12 @@ namespace Budget.Migrations
             modelBuilder.Entity("Budget.Models.TransactionModel", b =>
                 {
                     b.HasOne("Budget.Models.CategoryModel", "Category")
-                        .WithMany("Transactions")
-                        .HasForeignKey("CategoryId1")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Budget.Models.CategoryModel", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

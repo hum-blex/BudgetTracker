@@ -33,9 +33,9 @@ public class CategoryController : Controller
 		return View();
 	}
 
-	public IActionResult Edit(Guid? id)
+	public IActionResult Edit(int? id)
 	{
-		if (id == null || id == Guid.Empty)
+		if (id == null || id == 0)
 		{
 			return NotFound();
 		}
@@ -58,9 +58,9 @@ public class CategoryController : Controller
 		return View();
 	}
 
-	public IActionResult Delete(Guid? id)
+	public IActionResult Delete(int? id)
 	{
-		if (id == null || id == Guid.Empty)
+		if (id == null || id == 0)
 		{
 			return NotFound();
 		}
@@ -73,7 +73,7 @@ public class CategoryController : Controller
 	}
 
 	[HttpPost, ActionName("Delete")]
-	public IActionResult DeletePOST(Guid? id)
+	public IActionResult DeletePOST(int? id)
 	{
 		CategoryModel? obj = _db.categories.FirstOrDefault(u => u.Id == id);
 		if (obj == null)

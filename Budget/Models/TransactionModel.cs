@@ -7,17 +7,18 @@ namespace Budget.Models;
 public class TransactionModel
 {
 	[Key]
-	public Guid Id { get; set; }
+	public int Id { get; set; }
 	[Required]
 	public string Name { get; set; }
 	[Required]
 	public double Amount { get; set; }
 	[ValidateNever]
 	public DateTime DateTime { get; set; }
+	public int CategoryId { get; set; }
 	[ForeignKey("CategoryId")]
 	[ValidateNever]
 	public CategoryModel Category { get; set; }
 
-	public Guid CategoryId { get; set; }
+
 
 }

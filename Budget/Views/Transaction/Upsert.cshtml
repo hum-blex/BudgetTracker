@@ -1,0 +1,40 @@
+﻿@model TransactionVM
+
+<h1>@(Model.Transaction.Id ==0 ?"Add":"Update") Transactions</h1>
+
+<form class="row g-3" method="post">
+	<input asp-for="Transaction.Id" hidden />
+	<div class="col-md-6">
+		<label class="form-label">Name</label>
+		<input type="text" class="form-control" asp-for="Transaction.Name" />
+	</div>
+	<div class="col-md-6">
+		<label class="form-label">Amount</label>
+		<input type="number" class="form-control" asp-for="Transaction.Amount"/>
+	</div>
+	<div class="col-md-6">
+		<label asp-for="Transaction.CategoryId" class="form-label"></label>
+		<select asp-for="@Model.Transaction.CategoryId" asp-items="@Model.CategoryList" class="form-select" >
+			<option disabled selected>Choose...</option>
+		</select>
+		
+		<span asp-validation-for="Transaction.CategoryId" class="text-danger"></span>
+	</div>
+	<div class="row mt-4">
+		<div class="col-6">
+			@if (Model.Transaction.Id != 0)
+			{
+				<button type="submit" class="btn btn-primary form-control">Update</button>
+			}
+			else
+			{
+				<button type="submit" class="btn btn-primary form-control">Create</button>
+			}
+		</div>
+		<div class="col-6">
+			<a asp-controller="Transaction" asp-action="Index" class="btn btn-secondary">
+				Back to List
+			</a>
+		</div>
+	</div>
+</form>
